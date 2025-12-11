@@ -1,0 +1,244 @@
+[32;40mKernel binary:
+[0m[32;40m  text: 0xc0000000-0xc0039000
+[0m[32;40m  data: 0xc0039000-0xc0045c8a
+[0m[32;40m  bss:  0xc0045c8a-0xc005b000
+[0m[31;40mKernel contained in 1 page tables
+[0m[31;40mPhysical Memory Info: KERNEL_PHYS_BASE: 0x00143000, 144 bytes of info
+[0m[31;40mPhysical Memory Map:
+[0m[31;40m    0x00000000-0x0009fc00: Usable
+[0m[31;40m    0x0009fc00-0x000a0000: Reserved
+[0m[31;40m    0x000f0000-0x00100000: Reserved
+[0m[31;40m    0x00100000-0x0ffe0000: Usable
+[0m[31;40m    0x0ffe0000-0x10000000: Reserved
+[0m[31;40m    0xfffc0000-0x00000000: Reserved
+[0m[31;40mHighest usable physical memory: 0x0ffe0000
+[0m[31;40mAvailable memory: 0x0fe9d000
+[0m[31;40mPage System adding range: 0xc00a1000 to 0xcfe9d000
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 0, waste 0
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "slab_allocators" (0xc0051244)
+[0m[31;40m  Object Size:   32
+[0m[31;40m  Order:         0
+[0m[31;40m  Slab Capacity: 102
+[0m[37;40mmm/page.c:192 __page_split(): split 0xcfe99000 (1) into 0xcfe99000 and 0xcfe9a000
+[0m[31;40mmm/page.c:276 _page_alloc_order(): allocating 1 pages (addr 0xcfe9a000)
+[0m[31;40mmm/slab.c:271 _slab_allocator_grow(): Growing cache "slab_allocators" (0xc0051244), new slab 0xcfe9aff0 (1 pages)
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a000 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 1
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 0, waste 0
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "size-64" (0xcfe9a004)
+[0m[31;40m  Object Size:   72
+[0m[31;40m  Order:         0
+[0m[31;40m  Slab Capacity: 51
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a028 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 2
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 0, waste 48
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 4, waste 0
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "size-128" (0xcfe9a02c)
+[0m[31;40m  Object Size:   136
+[0m[31;40m  Order:         4
+[0m[31;40m  Slab Capacity: 455
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a050 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 3
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 0, waste 0
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "size-256" (0xcfe9a054)
+[0m[31;40m  Object Size:   264
+[0m[31;40m  Order:         0
+[0m[31;40m  Slab Capacity: 15
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a078 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 4
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 0, waste 384
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 1, waste 256
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 2, waste 0
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "size-512" (0xcfe9a07c)
+[0m[31;40m  Object Size:   520
+[0m[31;40m  Order:         2
+[0m[31;40m  Slab Capacity: 31
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a0a0 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 5
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 0, waste 960
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 1, waste 896
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 2, waste 768
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 3, waste 512
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 4, waste 0
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "size-1024" (0xcfe9a0a4)
+[0m[31;40m  Object Size:   1032
+[0m[31;40m  Order:         4
+[0m[31;40m  Slab Capacity: 63
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a0c8 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 6
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 0, waste 2016
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 1, waste 1984
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 2, waste 1920
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 3, waste 1792
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 4, waste 1536
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "size-2048" (0xcfe9a0cc)
+[0m[31;40m  Object Size:   2056
+[0m[31;40m  Order:         4
+[0m[31;40m  Slab Capacity: 31
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a0f0 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 7
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 1, waste 4064
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 2, waste 4032
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 3, waste 3968
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 4, waste 3840
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "size-4096" (0xcfe9a0f4)
+[0m[31;40m  Object Size:   4104
+[0m[31;40m  Order:         4
+[0m[31;40m  Slab Capacity: 15
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a118 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 8
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 2, waste 8160
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 3, waste 8128
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 4, waste 8064
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "size-8192" (0xcfe9a11c)
+[0m[31;40m  Object Size:   8200
+[0m[31;40m  Order:         4
+[0m[31;40m  Slab Capacity: 7
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a140 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 9
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 3, waste 16352
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 4, waste 16320
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "size-16384" (0xcfe9a144)
+[0m[31;40m  Object Size:   16392
+[0m[31;40m  Order:         4
+[0m[31;40m  Slab Capacity: 3
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a168 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 10
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 4, waste 32736
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "size-32768" (0xcfe9a16c)
+[0m[31;40m  Object Size:   32776
+[0m[31;40m  Order:         4
+[0m[31;40m  Slab Capacity: 1
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a190 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 11
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 5, waste 65504
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "size-65536" (0xcfe9a194)
+[0m[31;40m  Object Size:   65544
+[0m[31;40m  Order:         5
+[0m[31;40m  Slab Capacity: 1
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a1b8 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 12
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 6, waste 131040
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "size-131072" (0xcfe9a1bc)
+[0m[31;40m  Object Size:   131080
+[0m[31;40m  Order:         6
+[0m[31;40m  Slab Capacity: 1
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a1e0 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 13
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 7, waste 262112
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "size-262144" (0xcfe9a1e4)
+[0m[31;40m  Object Size:   262152
+[0m[31;40m  Order:         7
+[0m[31;40m  Slab Capacity: 1
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a208 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 14
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 0, waste 48
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 1, waste 40
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 2, waste 24
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 4, waste 0
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "pframe" (0xcfe9a20c)
+[0m[31;40m  Object Size:   64
+[0m[31;40m  Order:         4
+[0m[31;40m  Slab Capacity: 910
+[0m[31;40mmm/page.c:276 _page_alloc_order(): allocating 1 pages (addr 0xcfe99000)
+[0m[31;40mmm/slab.c:271 _slab_allocator_grow(): Growing cache "size-64" (0xcfe9a004), new slab 0xcfe99ff0 (1 pages)
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe99000 from "size-64" (0xcfe9a004), slab 0xcfe9a004, inuse 1
+[0m[32;40m--- ACPI INIT ---
+[0m[32;40mrsdp addr:  000f6460
+[0m[32;40mrsdt addr:  cfe99008
+[0m[32;40mrev:        0
+[0m[32;40moem:        BOCHS 6
+[0m[32;40ments:	[0m[31;40mmm/page.c:276 _page_alloc_order(): allocating 16 pages (addr 0xcfe81000)
+[0m[31;40mmm/slab.c:271 _slab_allocator_grow(): Growing cache "size-128" (0xcfe9a02c), new slab 0xcfe90ff0 (16 pages)
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe81000 from "size-128" (0xcfe9a02c), slab 0xcfe9a02c, inuse 1
+[0m[32;40mFACP [0m[37;40mmm/page.c:192 __page_split(): split 0xcfe61000 (5) into 0xcfe61000 and 0xcfe71000
+[0m[31;40mmm/page.c:276 _page_alloc_order(): allocating 16 pages (addr 0xcfe71000)
+[0m[31;40mmm/slab.c:271 _slab_allocator_grow(): Growing cache "size-4096" (0xcfe9a0f4), new slab 0xcfe800f0 (16 pages)
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe71000 from "size-4096" (0xcfe9a0f4), slab 0xcfe9a0f4, inuse 1
+[0m[32;40mSSDT [0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe81090 from "size-128" (0xcfe9a02c), slab 0xcfe9a02c, inuse 2
+[0m[32;40mAPIC [0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe99050 from "size-64" (0xcfe9a004), slab 0xcfe9a004, inuse 2
+[0m[32;40mHPET [0m[32;40m
+[0m[32;40m--- DISABLE 8259 PIC ---
+[0m[32;40mMasking all interrupts on the i8259 PIC
+[0m[32;40m--- APIC INIT ---
+[0m[32;40mlocal apic paddr:     0xfee00000
+[0m[32;40mPC-AT compatible:    1
+[0m[32;40mLAPIC:
+[0m[32;40m   id:         0x00
+[0m[32;40m   processor:  0x000
+[0m[32;40m   enabled:    1
+[0m[32;40mIOAPIC:
+[0m[32;40m   id:         0x00
+[0m[32;40m   base paddr:  0xfec00000
+[0m[32;40m   inti addr:   0x00000000
+[0m[32;40mUnknown APIC type:  0x2
+[0m[32;40mUnknown APIC type:  0x2
+[0m[32;40mUnknown APIC type:  0x2
+[0m[32;40mUnknown APIC type:  0x2
+[0m[32;40mUnknown APIC type:  0x2
+[0m[32;40mUnknown APIC type:  0x4
+[0m[32;40m--- Enabling APIC ---
+[0m[32;40mLocal APIC 0x00 Configuration:
+[0m[32;40m    APIC Version:         0x14
+[0m[32;40m    Spurious Vector:      0x000001ff
+[0m[32;40mIO APIC 0x00 Configuration:
+[0m[32;40m    APIC Version:         0x11
+[0m[32;40m    Maximum Redirection:  0x17
+[0m[33;40mdrivers/pci.c:106 pci_build_list(): => PCI DEVICES
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe81120 from "size-128" (0xcfe9a02c), slab 0xcfe9a02c, inuse 3
+[0m[33;40mdrivers/pci.c:137 pci_build_list(): DevID: 1237, Class: 6, Subclass: 0, Interface: 0, IRQ Line: 0
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe811b0 from "size-128" (0xcfe9a02c), slab 0xcfe9a02c, inuse 4
+[0m[33;40mdrivers/pci.c:137 pci_build_list(): DevID: 7000, Class: 6, Subclass: 1, Interface: 0, IRQ Line: 0
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe81240 from "size-128" (0xcfe9a02c), slab 0xcfe9a02c, inuse 5
+[0m[33;40mdrivers/pci.c:137 pci_build_list(): DevID: 7010, Class: 1, Subclass: 1, Interface: 80, IRQ Line: 0
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe812d0 from "size-128" (0xcfe9a02c), slab 0xcfe9a02c, inuse 6
+[0m[33;40mdrivers/pci.c:137 pci_build_list(): DevID: 7113, Class: 6, Subclass: 80, Interface: 0, IRQ Line: 9
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe81360 from "size-128" (0xcfe9a02c), slab 0xcfe9a02c, inuse 7
+[0m[33;40mdrivers/pci.c:137 pci_build_list(): DevID: 1111, Class: 3, Subclass: 0, Interface: 0, IRQ Line: 0
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe813f0 from "size-128" (0xcfe9a02c), slab 0xcfe9a02c, inuse 8
+[0m[33;40mdrivers/pci.c:137 pci_build_list(): DevID: 100e, Class: 2, Subclass: 0, Interface: 0, IRQ Line: b
+[0m[32;40mmain/apic.c:407 apic_setspur(): mapping spurious interrupts to %hu
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a230 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 15
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 0, waste 20
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 1, waste 0
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "vmmap" (0xcfe9a234)
+[0m[31;40m  Object Size:   20
+[0m[31;40m  Order:         1
+[0m[31;40m  Slab Capacity: 292
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a258 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 16
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 0, waste 0
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "vmarea" (0xcfe9a25c)
+[0m[31;40m  Object Size:   52
+[0m[31;40m  Order:         0
+[0m[31;40m  Slab Capacity: 68
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a280 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 17
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 0, waste 240
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 1, waste 16
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "proc" (0xcfe9a284)
+[0m[31;40m  Object Size:   472
+[0m[31;40m  Order:         1
+[0m[31;40m  Slab Capacity: 17
+[0m[31;40mmm/slab.c:313 slab_obj_alloc(): Allocated object 0xcfe9a2a8 from "slab_allocators" (0xc0051244), slab 0xc0051244, inuse 18
+[0m[31;40mmm/slab.c:157 _calc_slab_size(): calc_slab_size: minorder 0, waste 48
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 1, waste 28
+[0m[31;40mmm/slab.c:168 _calc_slab_size(): calc_slab_size: replacing with order 4, waste 0
+[0m[31;40mmm/slab.c:200 _allocator_init(): Initialized new slab allocator:
+[0m[31;40m  Name:          "kthread" (0xcfe9a2ac)
+[0m[31;40m  Object Size:   76
+[0m[31;40m  Order:         4
+[0m[31;40m  Slab Capacity: 780
+[0m[37;40mmm/page.c:192 __page_split(): split 0xcfe91000 (3) into 0xcfe91000 and 0xcfe95000
+[0m[37;40mmm/page.c:192 __page_split(): split 0xcfe95000 (2) into 0xcfe95000 and 0xcfe97000
+[0m[37;40mmm/page.c:192 __page_split(): split 0xcfe97000 (1) into 0xcfe97000 and 0xcfe98000
+[0m[31;40mmm/page.c:276 _page_alloc_order(): allocating 1 pages (addr 0xcfe98000)
+[0m[31;40mSIGNATURE: 53616c7465645f5fdb485beb2f30c9baf10b74e3ec210e09942fec0b3cdab5bf2c33053f400c1dba587632c443b03d42
+[0m[31;40mmm/page.c:276 _page_alloc_order(): allocating 2 pages (addr 0xcfe95000)
+[0mNot yet implemented: PROCS: bootstrap, file main/kmain.c, line 96
+panic in main/kmain.c:98 bootstrap(): weenix returned to bootstrap()!!! BAD!!!
+
+Kernel Halting.
+
