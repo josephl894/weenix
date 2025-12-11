@@ -1,0 +1,387 @@
+Thomas Lord Department of
+Computer Science
+ 
+viterbi-seal-rev-770x360.png
+usc-seal-1597x360.png
+ 
+[ Home | Syllabus | Lectures | Videos | Discussions | Projects | Forum ]
+Fall 2025
+CSCI 402
+Kernel Programming Assignments
+[ This content is protected and may not be shared, uploaded, or distributed. ]
+These specs are private (i.e., only for students who took or are taking CSCI 402 at USC). You do not have permissions to display these specs at a public place (such as anywhere on github.com or a public bitbucket.org repository). You also do not have permissions to display the code you write to implementation these specs at a public place since your code was written to implement private specs. (If a prospective employer asks you to post your code, please tell them that you do not have permissions to do so; but you can send them a private copy and ask them to keep it private.)
+
+Overview
+(Please check out the kernel FAQ before sending your questions to the TAs, the course producers, or the instructor.)
+You are provided with a source and binary release of a skeletal operating system called weenix. Most of the OS pieces are filled in but there are missing pieces. You are given detailed instructions for where to modify or add your code. You are expected to complete the assignments in the order listed below, because each assignment depends upon the code for the previous assignment.
+
+Kernel Assignment 1 (kernel threads - PROCS), due 11:45PM, 10/24/2025. Electronic submissions only.
+Kernel Assignment 2 (VFS layer - VFS), due 11:45PM, 11/14/2025. Electronic submissions only.
+Kernel Assignment 3 (virtual memory - VM), due 11:45PM, 12/5/2025. Electronic submissions only.
+Please begin working on the assignments early: since the assignments are "cumulative", if you don't have a working version of assignment 1 (for example), you may find it difficult to complete assignment 2.
+Cheating
+Accessing a submission from a previous semester (e.g., you run a submission from a previous semester to see how another student's code works) is considered cheating. If it's evident from your submission that you have accessed a submission from a previous semester, I will forward your case to USC Office of Academic Integrity (OAI) for cheating investigation. The standard punishment is a grade of F in the class. Since there is only one submission from a team, even if only one team member cheated, the entire team is considered cheated. Therefore, please make sure that your teammates are not cheating! Meet often with your teammates and make sure that everyone can explain every line of code they wrote.
+System Prerequisites
+You are required get your code to work on a "standard" 32-bit Ubuntu 16.04 system running QEMU 2.5 (any subversion of Ubuntu 16.04 is fine). If you don't have such a system, please see the instructions on how to install Ubuntu 16.04 on a Windows or a Mac OS X machine. Please make sure that you have installed all the required software for doing the kernel assignments.
+As soon as the Kernel Assignment 1 is made available to you, you should make sure that you can compile the assignment and debug the assignment on a "standard" 32-bit Ubuntu 16.04. If any of these is not working right, most likely, you did not set up the system properly and you should contact the instructor as soon as possible!
+
+Please do not waste your time on anything newer than 32-bit Ubuntu 16.04. We will not help you to get a newer system running. We will ONLY grade your kernel assignments on a "standard" 32-bit Ubuntu 16.04 with QEMU 2.5. We will not grade your kernel assignments on any other systems. Also, it's best to use a Ubuntu 16.04 in a virtual machine only for doing our kernel assignments and don't install things you don't need into in. If you want to play with Ubuntu and install other stuff, you can install additional virtual machines.
+
+Download and Setup
+By now, you should have received an e-mail containing a link to download your personalized kernel source code. Please click on the link in it to download the kernel source code tarball (this would be referred to as the pristine kernel code) and save it as "weenix-assignment-3.9.0.tar.gz" (which should be the default file name). Please do the following in a terminal window to unpack and compile the kernel source code on your Ubuntu 16.04 machine:
+    tar xvzf weenix-assignment-3.9.0.tar.gz 
+    cd weenix-assignment-3.9.0/weenix
+    make clean
+    make
+During "make" above, if you see an error message saying something about "grub-mkrescue", please run the following command:
+    sudo apt-get install -y xorriso
+(Although you shouldn't need to do the above if you have a standard 32-bit Ubuntu 16.04.)
+By the way, it is very important that if your Ubuntu 16.04 is running inside a virtual machine on Windows, you must NOT run the above commands in a shared folder. If you run the above commands inside a shared folder, some symbolic links will not be created properly and you will not be able to compile your kernel. If you run the above commands on a Mac and use FileZilla to copy files, that won't work either because FileZilla cannot copy symbolic links. (Some students truly prefer to work on the kernel assignments inside the shared folder. If you have to do it that way, please see this kernel FAQ item about what you can do and more importantly, what you must be careful about. Please remember that if you try to run your code and debug your code from a shared folder, things may be unpredictable and strange things may happen. That's why it's not recommended to do your work in a shared folder. But please note that the grader cannot grade your assignments in a shared folder.) Also, please make sure that the full path of the directory you start with does not contain any special characters (such as parenthesis and brackets) or you can break the Makefile used in weenix.
+
+Now you are ready to start weenix for the first time. Just do:
+
+    ./weenix -n
+If all goes well, you should see the following at the bottom of the terminal window:
+    Not yet implemented: PROCS: bootstrap, file main/kmain.c, line 96
+    panic in main/kmain.c:98 bootstrap(): weenix returned to bootstrap()!!! BAD!!!
+
+    Kernel Halting.
+Line 96 of "kernel/main/kmain.c" looks like:
+    NOT_YET_IMPLEMENTED("PROCS: bootstrap");
+and it's responsible for the printout above. Your job is to replace all such code with your implementation of the corresponding functions. (Please do not write code for a particular function and not remove or comment out the corresponding call to the NOT_YET_IMPLEMENTED() function.) If you look at the code and comments around lines that look like the above, you will find hints regarding what you need to do. For most of these functions, you should be able to do the replacement in-place. For more complex functions, you may want to split your code up and add additional functions (but put them in the same file). You must not add new files to the kernel.
+A copy of the complete weenix documentation (in PDF) is available as "doc/latex/documentation.pdf" in the pristine kernel tarball. A copy of the weenix documentation (in PDF) is provided here for your convenience. Please skip any section that's not relevant or applicable (e.g., section 2.2.5). Please understand that the weenix documentation came from Brown University and their requirements are not our requirements (our requirements are the spec and the grading guidelines)! There may be typos and bugs in it. Also, the pristine kernel source have been modified to make things work on the "standard 32-bit Ubuntu 16.04" system.
+
+General Grading Considerations
+Please make sure that you are familiar with these additional requirements for kernel assignments so you won't lose a lot of points.
+Group and Group Grading
+Please see information regarding group formation and group grading.
+Late Submission Policy
+Please see the late policy.
+Debugging with gdb
+You should start using the debugger (gdb) right away! For some basic gdb commands, please see slide 5 of the week 1 discussion section slides. This can save from you a lot of frustration! To debug the kernel with gdb, you need to set GDBWAIT=1 in Config.mk, recompile the kernel (by doing "make clean; make"), and start weenix by running the following command instead:
+    ./weenix -n -d gdb -w 10
+(If you have a slow machine, you may have to use a value larger than 10. If you have a fast machine, you may have to use a value smaller than 10. If you have a super fast machine, you can use a value of 1.) The above command invokes gdb to debug the weenix kernel. If all goes well, you should see the following at the bottom of the terminal window (please note that the top part may be OS and configuration dependent):
+    /usr/bin/qemu-system-i386
+    GNU gdb (Ubuntu 7.11.1-0ubuntu1~16.5) 7.11.1
+    Copyright (C) 2016 Free Software Foundation, Inc.
+    License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+    This is free software: you are free to change and redistribute it.
+    There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+    and "show warranty" for details.
+    This GDB was configured as "i686-linux-gnu".
+    Type "show configuration" for configuration details.
+    For bug reporting instructions, please see:
+    <http://www.gnu.org/software/gdb/bugs/>.
+    Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+    For help, type "help".
+    Type "apropos word" to search for commands related to "word"...
+    Reading symbols from kernel/weenix.dbg...done.
+    0xc0006fce in kmain () at main/kmain_aux.c:138
+    138	        while (gdb_wait) ;
+    Breakpoint 1 at 0xc000944e: file util/debug.c, line 190.
+    Breakpoint 2 at 0xc0006c77: file main/kmain_aux.c, line 155.
+    Breakpoint 3 at 0xc0006c84: file main/kmain.c, line 92.
+    
+    Breakpoint 3, bootstrap (arg1=0, arg2=0x0) at main/kmain.c:92
+    92	        dbgq(DBG_TEST, "SIGNATURE: ...\n");
+    (gdb) 
+It's perfectly fine if you are getting different addresses. But the line numbers should match.
+You should try a few gdb commands from the week 1 discussion section slides. When you are ready to proceed, type the following at the gdb prompt (you don't need to type "(gdb) "; it's left there so you know that the "c/cont" command is to be entered at the gdb prompt):
+
+    (gdb) c
+You should get a kernel panic and see the same "Not yet implemented" message as above in a debugging window (the title of the window should show "qemu-system-i386"). Since breakpoint 1 of the debugger is set at the kernel panic routine, you should see the following:
+    Continuing.
+
+    Breakpoint 1, dbg_panic_halt () at util/debug.c:190
+    190	        __asm__ volatile("cli; hlt");
+    (gdb) 
+To get out of debugging, press <Ctrl+C> once and then type the following at the gdb prompt:
+    (gdb) quit
+Sometimes, you may have to press <Ctrl+C> to get the attention of gdb. Unlike debugging a user program in our warmup assignments, when you are debugging weenix and you press <Ctrl+C>, you would kill QEMU (and therefore, you would also kill weenix)! So, only press <Ctrl+C> if you are ready to quit weenix.
+Please note that when you are running weenix with gdb, all the kernel debugging messages will go to a window with "qemu-system-i386" in the titlebar. If you don't see this window and only see the window with "QEMU" in the titlebar, that's not abnormal! If you want to see all the kernel debugging messages, either you have to run weenix without gdb, or you can set GDBWAIT=1 in Config.mk and start weenix by running "./weenix -n -d gdb -w 10". Please see comments in Config.mk and slide 3 of the Week 5 discussion section slides.
+
+If you have setup everything correctly but when you run "./weenix -n -d gdb -w 10", gdb would not break inside bootstrap() as illustrated above, please take a look at the line right below "Reading symbols from kernel/weenix.dbg...done". It should say "0xc0006fce in kmain () at main/kmain.c:138" (the numbers may not be exact). If you don't see that line in it but instead has "?" in it, then it may be due to improper VirtualBox settings for NAT Forwarding (by default, the NAT Forwarding settings should be empty and you shouldn't have modified anything in "network" settings when you setup your VirtualBox; if you did modify something in "network" settings" and ended up you cannot do your kernel assignments, you should reinstall everything from the beginning).
+
+Kernel Assignment 1
+For the assignment description, please see Chapter 3, "Processes and Threads", of the weenix documentation (in PDF). (To complete this assignment, please also see Chapter 4, "Drivers", of the same documentation.) When you start using kshell, you need to also set DRIVERS=1 in Config.mk.
+The code you need to implement for this assignment are labeled as:
+
+    NOT_YET_IMPLEMENTED("PROCS: ...");
+To find all the code that have such as label, please enter the following command:
+    grep PROCS: kernel/*/*.c
+    grep PROCS: kernel/*/*/*.c
+You need to get familiar with the grep command because that's the command you can use to search for strings in a large collection of files.
+Please make code changes in-place (and you must delete or comment out the corresponding NOT_YET_IMPLEMENTED() call if you write code for it). Any helper function you add must go into a file that's part of the standard submission. If you want to include additional code to test/exercise your kernel, you must put those code in "kernel/main/kmain.c".
+
+You are provided with an empty procs-README.txt file along with the pristine weenix source code. You must replace it with the content of this template ("k1-README.txt") and fill it out with your documentation information (i.e., replace all "(Comments?)" with your evalution and replace all standalone "?" with information appropriate for your submission). You must not delete a single line from this README file. For more details, please see the requirements on README.
+
+Additional Notes
+You are expected to also do the following.
+When you are all done with all the PROCS code, you must try the following to perform additional testing. Since the DRIVERS code has been provided to you as part of the assignment, you can actually enable it by editing Config.mk and change the values of the DRIVERS variable to 1. Then do:
+
+    make clean
+    make
+    ./weenix -n
+If this works without a problem, the next thing you should do is to run a shell (known as kshell) by following the instruction in this kshell FAQ item. Then recompile and rerun weenix. If all goes well, you should get a running kernel shell (no file system though). At the shell prompt, you can type help to see all the available shell commands.
+You are required to demonstrate that your code works properly. The best way to do this is to add test functions in "kernel/main/kmain.c" and make them accessible through commands in kshell. Please see Section 4.6 of the weenix documentation (in PDF) regarding how to get kshell to work. You should add commands to your kshell to invoke additional tests and to exercise your code. Make sure you document your commands well enough so that the grader knows what to do.
+
+Three tests routines have been written for you to exercise and test your implementation. They are faber_thread_test() in "kernel/proc/faber_test.c" and sunghan_test() and sunghan_deadlock_test() in "kernel/proc/sunghan_test.c". You must provide 3 separate kshell commands to invoke these functions. Not only you need to "pass these tests", you should also read the code of these routines and figure out what printout you should expect. You need to make sure that the printout from all these programs are correct. We will not provide the "correct output" for you. You can discuss this with your classmates in the class Google Group. (Please remember that sharing code or pseudo-code in the class Google Group is considered cheating. Sharing program printout is not considered cheating.)
+
+Please keep the following in mind when you are doing this assignment (to keep you out of trouble):
+
+As far as the machine is concerned, the kernel is very very powerful. There's nothing the kernel cannot do on that machine.
+The weenix kernel is non-preemptive. Think hard about what this means and what this implies.
+We are not implementing multiple threads per process (i.e., MTP=0 in Config.mk). So, if you want to create a new kernel thread, you must first create a new kernel process.
+I would recommend that you implement Kernel 1 in the following phases:
+Phase 0: Read weenix documentation, kernel spec, kernel FAQ, grading guidelines and watch Discussions 4 & 5 videos. You should do this as early as possible.
+Phase 1: Watch Discussion 6 video. Keep DRIVERS=0 in Config.mk, get the INIT process (with PID=1) to start and quit and make sure that you can halt the kernel cleanly. You should start using gdb to debug the kernel and get familiar with it. Please try your best to get this phase done in 10 days.
+Phase 2: Watch Discussion 7 video. Keep DRIVERS=0 in Config.mk, call faber_thread_test() from initproc_run(). Start with CS402TESTS=1 (can go as high as 8) in Config.mk and make sure that you can halt the kernel cleanly every time you shutdown weenix. Please try your best to get this phase done in 4 days.
+Phase 3: Set DRIVERS=1 in Config.mk and run kshell in initproc_run(). The "help", "echo" and "exit" kshell commands should work. If not, single-step into kshell code to figure out why it's not working and fix your code. Add kshell commands to invoke test functions mentioned in the grading guidelines.
+Some Hints
+Have you checked out the kernel FAQ? It's probably worthwhile to read through the entire kernel 1 section of it at least once.
+At any point in time in the execution of your kernel, you should be able to answer the following questions:
+
+Where are ALL the kernel threads? (Remember, one in the CPU and all other threads are waiting in a queue somewhere.)
+How (which line of code and in which function) did they get to where they are? (Remember, we have a non-preemptive kernel.)
+For each kernel thread, who will move it to the run queue (and under what condition)? (Clearly, a thread waiting in a queue cannot move itself.)
+You may want to consider walking through the test code mentioned in the grading guidelines first before you start coding to understand how some important functions are used so you know what you need to implement in these functions.
+Submission
+If you have made all your code changes in-place (which you are requied to do), it will be very easy to create a gzipped tarfile for submission using the Bistro system. To create your submission file, just do the following:
+    make procs-submit
+and the following command should run:
+    tar cvzf procs-submit.tar.gz \
+            Config.mk \
+            procs-README.txt \
+            kernel/main/kmain.c \
+            kernel/proc/kmutex.c \
+            kernel/proc/kthread.c \
+            kernel/proc/proc.c \
+            kernel/proc/sched.c \
+            kernel/proc/sched_helper.c
+Please note that you are not permitted to change any other existing files. If you submit another existing file, it will be deleted before grading. If you give instructions to the grader to modify another existing file (other than Config.mk), it will disregarded.
+Please enter your USC e-mail address and your submission PIN below. Then click on the Browse button and locate and select your submission file (i.e., procs-submit.tar.gz). Then click on the Upload Kernel 1 button to submit your procs-submit.tar.gz. If you see an error message, please read the dialogbox carefully and fix what needs to be fixed and repeat the procedure. If you don't know your submission PIN, please visit this web site to have your PIN e-mailed to your USC e-mail address.
+
+When this web page was last loaded, the time at the submission server (ec2-52-25-47-20.us-west-2.compute.amazonaws.com) was 05Oct2025-17:30:03. Reload this web page to see the current time on ec2-52-25-47-20.us-west-2.compute.amazonaws.com.
+
+USC Email:
+ @usc.edu
+Submission PIN:
+Event ID (read-only):
+ec2-52-25-47-20.us-west-2.compute.amazonaws.com_80_1557931083_4
+Submission File Full Path:
+No file chosen
+ 
+ 
+If the command is executed successfully and if everything checks out, a ticket will be issued to you to let you know "what" and "when" your submission made it to the Bistro server. The next web page you see would display such a ticket and the ticket should look like the sample shown in the submission web page (of course, the actual text would be different, but the format should be similar). Make sure you follow the Verify Your Ticket instructions to verify the SHA1 hash of your submission to make sure what you did not accidentally submit the wrong file. Also, an e-mail (showing the ticket) will be sent to your USC e-mail address. Please read the ticket carefully to know exactly "what" and "when" your submission made it to the Bistro server. If there are problems, please contact the instructor.
+Please submit only source code that you have modified or added. You will lose 2 points if your submission includes binary files. You will lose 2 points if your submission includes too many files that were identical to what's given to you in the assignment. You will also lose 2 points if files in your submission are not in the correct directory (as specified in the original Makefile). For example, kmain.c must be in kernel/main in your submitted .tar.gz file after it is unzipped and un-tared.
+
+It is extreme important that you also verify your kernel submission after you have submitted procs-submit.tar.gz electronically to make sure that every you have submitted is everything you wanted us to grade.
+
+Grading Guidelines
+The grading guidelines has been made available. It is possible that there are bugs in the guidelines. If you find bugs, please let the instructor know as soon as possible. Please make sure that you are familiar with these additional requirements for kernel assignments so you won't lose a lot of points.
+The grading guidelines is the only grading procedure we will use to grade your program. No other grading procedure will be used. (We may make minor changes if we discover bugs in the script or things that we forgot to test.)
+
+Kernel Assignment 2
+of the weenix documentation (in PDF). Please remember to edit Config.mk and change the values of the DRIVERS and VFS variables to 1.
+The code you need to implement for this assignment are labeled as:
+
+    NOT_YET_IMPLEMENTED("VFS: ...");
+To find all the code that have such as label, please enter the following command:
+    grep VFS: kernel/*/*.c
+Please make code changes in-place (and you must delete or comment out the corresponding NOT_YET_IMPLEMENTED() call if you write code for it). Any helper function you add must go into a file that's part of the standard submission. If you want to include additional code to test/exercise your kernel, you must put those code in "kernel/main/kmain.c".
+In "kernel/main/kmain.c", it should be clear that for kernel 2, you should only replace the two NOT_YET_IMPLEMENTED("VFS: idleproc_run"); calls and you must not modify the rest of idleproc_run(). If you change idleproc_run() in any other way, we will restore it before grading.
+
+You are provided with an empty vfs-README.txt file along with the pristine weenix source code. You must replace it with the content of this template ("k2-README.txt") and fill it out with your documentation information (i.e., replace all "(Comments?)" with your evalution and replace all standalone "?" with information appropriate for your submission). You must not delete a single line from this README file. For more details, please see the requirements on README.
+
+You are also required to enable kshell and get it running in your implementation. Please see Section 4.6 of the weenix documentation (in PDF) regarding how to get kshell to work. You should add commands to your kshell to invoke additional tests and to exercise your code. One command you must add is "vfstest" and it should invoke vfstest_main() (with argc=1 and argv=NULL) in "kernel/test/vfstest/vfstest.c" in a separate process. You are also required to add two separate kshell commands to invoke faber_fs_thread_test() and faber_directory_test(). Please notice that these two functions have function prototypes of a kshell command. Therefore, please run them directly in kshell and do not run them in a separate process. (Just to be perfectly clear, you must NOT modify "vfstest.c" and "faber_fs_test.c". If you submit your own "vfstest.c" or "faber_fs_test.c", we will delete it and use the original one to grade your submission.)
+
+Additional Notes
+This assignment is about:
+File naming
+File protection
+File abstraction API
+Kernel data structures for open files
+Reference counting
+Polymorphism
+You should be familiar with the following sections of the textbook:
+Section 1.3.5
+Section 4.1.4.2
+The actual file system that's supporting VFS in this assignment is the ramfs file system (a RAM-based file system). Please read section 5.2 of the weenix documentation (in PDF) for an instruction to the ramfs file system. You should use gdb to step inside the code of the ramfs file system to see what's going on in an actual file system in weenix so you can understand how an actual file system is suppose to work. You should get familiar with the code in ramfs to understand how polymorphism is implemented and used. This is important because when you are done with this assignment, you will switch to use S5FS which you do not have all the source code and will have to use your imagination. So, I would strongly suggest that you try to understand pretty much every line of code in "kernel/fs/ramfs/ramfs.c".
+Please note that although the S5FS code has been provided to you in "kernel/libs5fs.a", the S5FS code won't work because a crucial part (related to Virtual Memory) is still missing, which is probably the first thing you will need to implement in Kernel Assignment 3. So, even if you set the S5FS variable to 1 in Config.mk and all your code works perfectly, your kernel will still die because pframe_get() is not implemented.
+
+I would recommend that you implement Kernel 2 in the following phases:
+
+Phase 1: Watch Discussion 8 video. Add VFS=1 in Config.mk. Create directories and devices in idleproc_run() and implement pathname resolution functions in "namev.c". I would also recommend that you implement do_stat() verify if you have successfully created directories and devices. When kernel shuts down (you need to comment out kshell code in initproc_run() temporarily for this), make sure you don't have any active vnodes. If you do, you can call vfs_is_in_use() to figure out where these active vnodes are Please try your best to get this phase done in 10 days.
+Phase 2: Watch Discussion 9 video. Since the Kernel 2 kshell depends on VFS, you may need to fix some bugs to get kshell to work in Kernel 2. Start with CS402TESTS=1 (go as high as 8) in Config.mk and make sure that you can halt the kernel cleanly. Please try your best to get this phase done in 3 days.
+Phase 3: Add kshell command to run "vfstest_main()". After you get "vfstest_main()" to pass, add more kshell commands to invoke test functions mentioned in the rest of the grading guidelines.
+Some Hints
+Have you checked out the kernel FAQ? It's probably worthwhile to read through the entire kernel 2 section of it at least once.
+Submission
+If you have made all your code changes in-place (which you are requied to do), it will be very easy to create a gzipped tarfile for submission using the Bistro system. To create your submission file, just do the following:
+    make vfs-submit
+and the following command should run:
+    tar cvzf vfs-submit.tar.gz \
+            Config.mk \
+            vfs-README.txt \
+            kernel/main/kmain.c \
+            kernel/proc/kmutex.c \
+            kernel/proc/kthread.c \
+            kernel/proc/proc.c \
+            kernel/proc/sched.c \
+            kernel/proc/sched_helper.c \
+            kernel/fs/namev.c \
+            kernel/fs/open.c \
+            kernel/fs/vfs_syscall.c \
+            kernel/fs/vn_special.c
+Please note that you are not permitted to change any other existing files. If you submit another existing file, it will be deleted before grading. If you give instructions to the grader to modify another existing file (other than Config.mk), it will disregarded.
+Please enter your USC e-mail address and your submission PIN below. Then click on the Browse button and locate and select your submission file (i.e., vfs-submit.tar.gz). Then click on the Upload Kernel 2 button to submit your vfs-submit.tar.gz. If you see an error message, please read the dialogbox carefully and fix what needs to be fixed and repeat the procedure. If you don't know your submission PIN, please visit this web site to have your PIN e-mailed to your USC e-mail address.
+
+When this web page was last loaded, the time at the submission server (ec2-52-25-47-20.us-west-2.compute.amazonaws.com) was 05Oct2025-17:30:03. Reload this web page to see the current time on ec2-52-25-47-20.us-west-2.compute.amazonaws.com.
+
+USC Email:
+ @usc.edu
+Submission PIN:
+Event ID (read-only):
+ec2-52-25-47-20.us-west-2.compute.amazonaws.com_80_1557931083_5
+Submission File Full Path:
+No file chosen
+ 
+ 
+If the command is executed successfully and if everything checks out, a ticket will be issued to you to let you know "what" and "when" your submission made it to the Bistro server. The next web page you see would display such a ticket and the ticket should look like the sample shown in the submission web page (of course, the actual text would be different, but the format should be similar). Make sure you follow the Verify Your Ticket instructions to verify the SHA1 hash of your submission to make sure what you did not accidentally submit the wrong file. Also, an e-mail (showing the ticket) will be sent to your USC e-mail address. Please read the ticket carefully to know exactly "what" and "when" your submission made it to the Bistro server. If there are problems, please contact the instructor.
+Please submit only source code that you have modified or added. You will lose 2 points if your submission includes binary files. You will lose 2 points if your submission includes too many files that were identical to what's given to you in the assignment. You will lose 2 points if files in your submission are not in the correct directory (as specified in the original Makefile).
+
+It is extreme important that you also verify your kernel submission after you have submitted vfs-submit.tar.gz electronically to make sure that every you have submitted is everything you wanted us to grade.
+
+Grading Guidelines
+The grading guidelines has been made available. It is possible that there are bugs in the guidelines. If you find bugs, please let the instructor know as soon as possible. Please make sure that you are familiar with these additional requirements for kernel assignments so you won't lose a lot of points.
+The grading guidelines is the only grading procedure we will use to grade your program. No other grading procedure will be used. (We may make minor changes if we discover bugs in the script or things that we forgot to test.)
+
+Kernel Assignment 3
+For the assignment description, please see Chapter 7, "Virtual Memory", of the weenix documentation (in PDF). (It's a good idea to also read Chapter 6, "System V File System", of the same documentation.) Please remember to edit Config.mk and change the values of the DRIVERS, VFS, S5FS, and VM variables to 1. (Only use DYNAMIC=1 towards the end for extra credit when everything seems to be working.) It's best not to attempt to debug anything when DYNAMIC=1.
+The code you need to implement for this assignment are labeled as:
+
+    NOT_YET_IMPLEMENTED("VM: ...");
+To find all the code that have such as label, please enter the following command:
+    grep VM: kernel/*/*.c
+Please note that you do not need to implement zero_mmap() in "kernel/drivers/memdevs.c" and s5fs_mmap() in "kernel/fs/s5fs/s5fs.c" because they were implemented for you already (although it doesn't look like it). Their implementations are in "kernel/libdrivers.a" and "kernel/libs5fs.a".
+Please make code changes in-place (and you must delete or comment out the corresponding NOT_YET_IMPLEMENTED() call if you write code for it). Any helper function you add must go into a file that's part of the standard submission. If you want to include additional code to test/exercise your kernel, you must put those code in "kernel/main/kmain.c".
+
+You are provided with an empty vm-README.txt file along with the pristine weenix source code. You must replace it with the content of this template ("k3-README.txt") and fill it out with your documentation information (i.e., replace all "(Comments?)" with your evalution and replace all standalone "?" with information appropriate for your submission). You must not delete a single line from this README file. For more details, please see the requirements on README.
+
+Additional Notes
+In addition to the assignment description, you need to be familiar with the following sections of the the weenix documentation (in PDF).
+Section 6.3
+Chapter 7
+You should also read the man pages of mmap() on Ubuntu 16.04 to get a basic understanding of the concept of creates a new mapping in the virtual address space. Please note that this mmap() is a system call to create a mapping at the user's request (for example, to map a file into memory). In the kernel, similar mappings needs to be created when the kernel executes a user program (to map in the text and data segments of a user program into the address of the user program). Please note that this is not exactly the same as what you need to implement in weenix because weenix is not Linux.
+Assuming your kernel 2 submission was perfect. If you just set S5FS=1 in Config.mk (keep VM=0) and recompile and rerun weenix, your kernel will die because pframe_get() is not implemented. It is strongly recommended that you start this assignment by first implementing pframe_get(), pframe_pin(), and pframe_unpin() in "kernel/mm/pframe.c" so you understand how physical page frames work. When you think that these functions are working properly, you should run vfstest (via kshell) again to increase your confidence that your kernel 2 was done correctly. (Please note that, at this point, you are running vfstest in the kernel. This is not the same as running "/usr/bin/test/vfstest" in "userland".) At this point, you can go ahead and set VM=1 and proceed with the rest of kernel 3.
+
+In section 7.8.1 of the weenix documentation (in PDF), it mentioned that you should call kernel_execve() in your init process and execute the "/sbin/init" program. You should not pass NULL as the 2nd and 3rd arguments to kernel_execve(). Instead, you can invoke kernel_execve() in the following way:
+
+    char *argv[] = { "/sbin/init", NULL };
+    char *envp[] = { NULL };
+    kernel_execve("/sbin/init", argv, envp);
+You can also use kernel_execve() to invoke other user space programs, such as "/usr/bin/hello", "/usr/bin/args", "/bin/uname", "/usr/bin/fork-and-wait", etc., directly from the kernel. It is highly recommended that you have all of these programs run in user space perfectly before attempting "/sbin/init".
+Please note that when you shutdown the kernel, you should see the "weenix: halted cleanly" message in the terminal. But unlike kernel 2, you may see a few messages from s5fs_check_refcounts(), complaining that the refcount check of s5fs filesystem was completed UNSUCCESSFULLY and a warning about linkcount corruption. (To see this, you must include "print" in the DBG flag in Config.mk.) Since this is just a warning, it is perfectly acceptable as long as you also see the "weenix: halted cleanly" message in the end.
+
+I would recommend that you implement Kernel 3 in the following phases:
+
+Phase 1: Watch Discussion 10 video. Add S5FS=1 but keep VM=0 in Config.mk and finish 3 functions in "pframe.c" and pass vfstest as soon as possible. Don't set VM=1 unless you have a fairly reliable S5FS. Please try your best to get this phase done in 2 days.
+Phase 2: Watch Discussions 11 & 12 video. Add VM=1 in Config.mk. Build address space and run "/usr/bin/hello" directly from initproc_run() using kernel_execve(). INIT process in the kernel becomes "hello" process in user space! This is not easy and a lot of work. You need to be able to load the program into memory, build and manipulate the address space, handle page faults, and get some real system calls (such as open() and write()) to work. The last part requires converting user-space virtual address (uaddr) to the corresponding kernel-space virtual address (kaddr) using vmmap_read(). Please try your best to get this phase done in 7 days.
+Phase 3: Watch Discussion 13 video. Pass all tests mentioned in section (B) of the grading guidelines from initproc_run() using kernel_execve(). Get shadow objects and the fork() system call to work to run "/usr/bin/fork-and-wait". Please try your best to get this phase done in 4 days.
+Phase 4: Get "/sbin/init" to work to run user space shell and pass all tests mentioned in section (C) of the grading guidelines. You will need to get the mmap() and brk() system calls to work. Please try your best to get this phase done in 3 days.
+Phase 5: Pass all tests mentioned in section (D) of the grading guidelines from user space shell.
+Some Hints
+Have you checked out the kernel FAQ? It's probably worthwhile to read through the entire kernel 3 section of it at least once.
+One major confusion in this assignment is that polymorphism got even more complicated here. In kernel 2, you were asked to explore the code for polymorphism in the file system. But the code was fairly straight-forward since you are only deal with one actual file system and there is not recursion. In this assignment, you will be implementing something called mmobj which has 3 actual instances (i.e., anonymous objects, shadow objects, and there is also a type of mmobj in a vnode) and some polymorphic function calls may be recursive. So, if you are not carefully, you will end up with an infinite loop. As all recursive function goes, you should analyze it. You need to figure out what the base cases are and when to go into recursion. Think about this carefully before you write a lot of code.
+
+Please note that it is very important that you understand the concepts in section 7.3 of the textbook, especially how demand paging works. Let's take "/usr/bin/hello" as an example. In order to run the hello program, you need to first setup its address space (i.e., the memory map). When you execute the very first machine instruction in hello (even before you get to main()), you should expect a page fault (and you need to understand why). This is a "good" page fault. The purpose of a "good" page fault is for the kernel to find a page frame (and a physical page), fill the page frame (to be more precise, the physical page associated with the page frame) with data from disk (if it's associated with a file), fix the page table to map the corresponding virtual page to the physical page, and update kernel data structures to make everything consistent. When the kernel declares that the page fault has been fixed and returns to the user process, the user process should not page fault at the same virutal address immediately. If it page faults again immediately, it means that something is not setup properly. How do you debug this? Well, you need to know exactly what the user process should "see" and find out why the user process is not "seeing" what it is suppose to see. You need to know that the text segment of "/usr/bin/hello" looks like (using objdump, see an example in the weenix documentation (in PDF)) and verify that the user process can see these byte patterns and will be executing the right machine instructions. You need to read the machine/assembly code and see when the stack or data segment is referenced and know whether referencing such a memory location should cause a page fault or not. You may have to single-step machine instructions.
+
+Submission
+If you have made all your code changes in-place (which you are requied to do), it will be very easy to create a gzipped tarfile for submission using the Bistro system. To create your submission file, just do the following:
+    make vm-submit
+and the following command should run:
+    tar cvzf vm-submit.tar.gz \
+            Config.mk \
+            vm-README.txt \
+            kernel/main/kmain.c \
+            kernel/proc/kmutex.c \
+            kernel/proc/kthread.c \
+            kernel/proc/proc.c \
+            kernel/proc/sched.c \
+            kernel/proc/sched_helper.c \
+            kernel/fs/namev.c \
+            kernel/fs/open.c \
+            kernel/fs/vfs_syscall.c \
+            kernel/fs/vn_special.c \
+            kernel/api/access.c \
+            kernel/api/syscall.c \
+            kernel/mm/pframe.c \
+            kernel/proc/fork.c \
+            kernel/vm/anon.c \
+            kernel/vm/brk.c \
+            kernel/vm/mmap.c \
+            kernel/vm/pagefault.c \
+            kernel/vm/shadow.c \
+            kernel/vm/vmmap.c
+Please note that you are not permitted to change any other existing files. If you submit another existing file, it will be deleted before grading. If you give instructions to the grader to modify another existing file (other than Config.mk), it will disregarded.
+Please enter your USC e-mail address and your submission PIN below. Then click on the Browse button and locate and select your submission file (i.e., vm-submit.tar.gz). Then click on the Upload Kernel 3 button to submit your vm-submit.tar.gz. If you see an error message, please read the dialogbox carefully and fix what needs to be fixed and repeat the procedure. If you don't know your submission PIN, please visit this web site to have your PIN e-mailed to your USC e-mail address.
+
+When this web page was last loaded, the time at the submission server (ec2-52-25-47-20.us-west-2.compute.amazonaws.com) was 05Oct2025-17:30:03. Reload this web page to see the current time on ec2-52-25-47-20.us-west-2.compute.amazonaws.com.
+
+USC Email:
+ @usc.edu
+Submission PIN:
+Event ID (read-only):
+ec2-52-25-47-20.us-west-2.compute.amazonaws.com_80_1557931083_6
+Submission File Full Path:
+No file chosen
+ 
+ 
+If the command is executed successfully and if everything checks out, a ticket will be issued to you to let you know "what" and "when" your submission made it to the Bistro server. The next web page you see would display such a ticket and the ticket should look like the sample shown in the submission web page (of course, the actual text would be different, but the format should be similar). Make sure you follow the Verify Your Ticket instructions to verify the SHA1 hash of your submission to make sure what you did not accidentally submit the wrong file. Also, an e-mail (showing the ticket) will be sent to your USC e-mail address. Please read the ticket carefully to know exactly "what" and "when" your submission made it to the Bistro server. If there are problems, please contact the instructor.
+Please submit only source code that you have modified or added. You will lose 2 points if your submission includes binary files. You will lose 2 points if your submission includes too many files that were identical to what's given to you in the assignment. You will lose 2 points if files in your submission are not in the correct directory (as specified in the original Makefile).
+
+It is extreme important that you also verify your kernel submission after you have submitted vm-submit.tar.gz electronically to make sure that every you have submitted is everything you wanted us to grade.
+
+Grading Guidelines
+The grading guidelines has been made available. It is possible that there are bugs in the guidelines. If you find bugs, please let the instructor know as soon as possible. Please make sure that you are familiar with these additional requirements for kernel assignments so you won't lose a lot of points.
+The grading guidelines is the only grading procedure we will use to grade your program. No other grading procedure will be used. (We may make minor changes if we discover bugs in the script or things that we forgot to test.)
+
+Please note that the kernel 3 grading guidelines assumes that you can successfully run the user space shell (i.e., run "/sbin/init" by calling kernel_execve() from initproc_run()) and run all the commands in the grading guidelines from the user space shell. If you can do all that, you do not need kshell at all in kernel 3. HOWEVER, if you cannot get the user space shell to run, you should still try to get as much partial credit as possible, if you can run some of the user space programs successfully by themselves. If this is the case, you should implement a bunch of kshell commands, each kshell command would invoke only one subtest in the grading guidelines by passing the right parameters to kernel_execve() in a child process created by that kshell command to run the corresponding program in user space. At the end of that kshell command, you should wait for all child processes to die before giving back the kshell prompt. You should be able to run these kshell commands over and over again, without restarting weenix (unless the grading guidelines says that you must restart weenix). In this case, please document exactly how to invoke each such kshell command in the "ADDITIONAL INFORMATION FOR GRADER" section of your README file. For convenience, I would probably name these kshell commands "b1", "b2", ..., "b7", "d1", "d2", ..., "d5".
+
+Verify Your Kernel Submission
+After you submitted, for example, procs-submit.tar.gz, you should verify what you've submitted can be compiled as is and works the way you expected it to work and that your documentation is perfect. Let's say your procs-submit.tar.gz is in your home directory on your Ubuntu 16.04 machine. Do the following (assuming that you are using the pristine weenix source and procs-submit.tar.gz in your home directory):
+    rm -rf /tmp/xyzzy
+    mkdir /tmp/xyzzy
+    cd /tmp/xyzzy
+    tar xvzf ~/weenix-assignment-3.9.0.tar.gz
+    [ look at the output of the above command carefully, make sure ]
+    [     you have not included extra files in your submission ]
+    cd weenix-assignment-3.9.0/weenix
+    tar xvzf ~/procs-submit.tar.gz
+    make clean
+    make
+    ./weenix -n
+    [ go through grading guidelines line by line and re-run all your tests ]
+    [     to make sure they all work; check every line of your README file ]
+    [     and make sure that you have satisfied all the reuiqrements ]
+A few things to note:
+If the tar command failed, the procs-submit.tar.gz file you have submitted is not properly created.
+If the make command failed, you probably forgot to include something in your submission. Please remember that if this does not work, you may lose quite a few points.
+If any of the above failure occurs, you must recreate your submission and submit again and verify again.
+Backup Your Code
+It is imperative that you have a plan to recover from accidentally losing all your precious work. Since you are working on your own Ubuntu system, no one else will be doing the backup for you. Sometimes, when you don't shutdown your system properly (maybe because you let your battery go down to 0%), you may not be able to start Ubuntu because the disk inside the virtual machine is corrupted. The only thing you can do at that point is to install a brand new virtual machine and install a fresh 32-bit Ubuntu 16.04 system into it. If you don't have a backup copy of your code, you have to rewrite all your code from scratch! Please understand that when that happens, there is nothing anyone can do to recover the dead system!
+Ubuntu used to come with a free service called Ubuntu One which you can use as your "personal cloud". Unfortunately, it's no longer available and you have to look for some other solutions. You can probably use DropBox or other cloud-based services that's available on your machine.
+
+Here are a couple of ways to perform backup:
+
+Simply type:
+make backup
+A backup file will be created and copied into the "Shared-ubuntu" directory inside the home directory of your Ubuntu 16.04 system. If you have setup your shared folder according to the installation instructions, this backup file will be accessible on your host machine and you can use whatever cloud backup software on your host machine to save a copy of the backup into cloud storage.
+This approach is very simple and it's mainly good for backing up changes for yourself. It may be a bit difficult to share code modifications with your kernel teammates. But in general, it's a good idea to have a backup of all your work anyway.
+
+
+Create a git repository in the cloud drive and sync with it. This approach is more suitable for a team to share code. Pradeep Nayak, a student from a previous semester, posted steps about how to do this (using DropBox instead) in the class Google Group. I have not verified these steps so I don't know if it works or suitable for you or not.
+
+[ Last updated Sat Oct 04 2025 ]     [ Please see copyright regarding copying. ]
+[ Home | Syllabus | Lectures | Videos | Discussions | Projects | Forum ]
