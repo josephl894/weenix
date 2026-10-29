@@ -1,0 +1,10 @@
+source kernel/main/gdt.gdb
+source kernel/mm/pagetable.gdb
+source kernel/mm/page.py
+source kernel/mm/memcheck.py
+source kernel/mm/slab.py
+source kernel/proc/kthread.gdb
+source kernel/proc/proc.py
+source kernel/util/debug.py
+source kernel/util/list.py
+source kernel/vm/vmmap.gdb

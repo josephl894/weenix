@@ -1,8 +1,8 @@
 # Weenix (USC CSCI 402)
 
-This is a local copy of the **Weenix** teaching OS used in USC **CSCI 402 / CS 402** (assignment drop `weenix-assignment-3.9.0`). Weenix is a small Unix-like kernel students implement in stages: processes and scheduling, VFS, then virtual memory (with S5FS provided as a library).
+This is a local copy of the **Weenix** teaching OS used in USC **CSCI 402 / CS 402**. Weenix is a small Unix-like kernel students implement in stages: processes and scheduling, VFS, then virtual memory (with S5FS provided as a library).
 
-**This tree:** `/home/joseph/weenix-claude` on WSL Ubuntu (Windows: `\\wsl$\Ubuntu\home\joseph\weenix-claude`). It is the newest real source tree and the one published here.
+**This tree:** `/home/joseph/weenix` on WSL Ubuntu (Windows: `\\wsl$\Ubuntu\home\joseph\weenix`). The kernel, userland, and build files live at the repo root.
 
 **Team (from the assignment READMEs):** Yijun Li (`jli50217@usc.edu`), Yinghao Xu (`yinghaox@usc.edu`).
 
@@ -10,7 +10,7 @@ Kernel 1 (procs), Kernel 2 (VFS), and Kernel 3 (VM) student files are filled in.
 
 ## How to build and run
 
-From `weenix-assignment-3.9.0/weenix` (see the stock `README` there):
+From the repo root (see the stock `README` for extra notes):
 
 ```bash
 # Ubuntu/Debian deps (from the assignment README)
@@ -27,7 +27,7 @@ Kernel 3 is set to exec `/sbin/init` from the init process. Kshell helpers in `k
 
 ## Files worked on
 
-Paths are relative to `weenix-assignment-3.9.0/weenix`. These are the student files that differ from the starter.
+Paths are relative to the repo root. These are the student files that differ from the starter.
 
 ### Kernel 1 — processes, threads, sync
 
