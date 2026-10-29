@@ -6,7 +6,7 @@ This is a local copy of the **Weenix** teaching OS used in USC **CSCI 402 / CS 4
 
 **Team (from the assignment READMEs):** Yijun Li (`jli50217@usc.edu`), Yinghao Xu (`yinghaox@usc.edu`).
 
-Kernel 1 (procs), Kernel 2 (VFS), and Kernel 3 (VM) student files are filled in. Compared to the Oct 2025 starter (`Desktop\CSCI402\Shared-ubuntu\weenix-pristine`), only the assignment-allowed `.c` files (plus `Config.mk` and the three `*-README.txt` files) contain the real work. S5FS and driver `.c` files still have `NOT_YET_IMPLEMENTED` stubs; those subsystems come from `kernel/libs5fs.a` and `kernel/libdrivers.a`.
+Kernel 1 (procs), Kernel 2 (VFS), and Kernel 3 (VM) student files are filled in. Compared to the Oct 2025 starter, the assignment-allowed `.c` files plus `Config.mk` contain the real work. S5FS and driver `.c` files still have `NOT_YET_IMPLEMENTED` stubs; those subsystems come from `kernel/libs5fs.a` and `kernel/libdrivers.a`.
 
 ## How to build and run
 
@@ -27,7 +27,7 @@ Kernel 3 is set to exec `/sbin/init` from the init process. Kshell helpers in `k
 
 ## Files worked on
 
-Paths are relative to `weenix-assignment-3.9.0/weenix`. These are the files that differ from the starter and that the assignment actually allows you to change (`make vm-submit` / the three kernel READMEs).
+Paths are relative to `weenix-assignment-3.9.0/weenix`. These are the student files that differ from the starter.
 
 ### Kernel 1 — processes, threads, sync
 
@@ -39,7 +39,6 @@ Paths are relative to `weenix-assignment-3.9.0/weenix`. These are the files that
 | `kernel/proc/sched.c` | Run queue, context switch, cancellable sleep |
 | `kernel/proc/sched_helper.c` | Sleep / wakeup / broadcast on wait queues |
 | `kernel/proc/kmutex.c` | Blocking mutexes |
-| `procs-README.txt` | Kernel 1 self-grade |
 
 ### Kernel 2 — VFS
 
@@ -49,7 +48,6 @@ Paths are relative to `weenix-assignment-3.9.0/weenix`. These are the files that
 | `kernel/fs/open.c` | `do_open` |
 | `kernel/fs/vfs_syscall.c` | File, directory, and cwd syscalls |
 | `kernel/fs/vn_special.c` | Device-file read/write; later VM page ops for special files |
-| `vfs-README.txt` | Kernel 2 self-grade |
 
 ### Kernel 3 — virtual memory
 
@@ -66,7 +64,6 @@ Paths are relative to `weenix-assignment-3.9.0/weenix`. These are the files that
 | `kernel/api/access.c` | User-pointer permission checks |
 | `kernel/api/syscall.c` | `sys_read` / `sys_write` / `sys_getdents` copyin/copyout |
 | `Config.mk` | Enabled VFS, S5FS, VM, drivers |
-| `vm-README.txt` | Kernel 3 self-grade |
 
 `kernel/fs/file.c` and `kernel/fs/vnode.c` match the starter (not student work). Extra-credit stubs that are **still unimplemented**: MTP (`kthread_detach` / `kthread_join` / reapd), GETCWD (`lookup_name` / `lookup_dirpath`), and mounting (`do_mount` / `do_umount`).
 
@@ -162,10 +159,3 @@ Only functions that differ from the starter and had `NOT_YET_IMPLEMENTED` remove
 | `do_fork` | `kernel/proc/fork.c` | New process, cloned map with shadow objects, cloned thread |
 | `addr_perm` / `range_perm` | `kernel/api/access.c` | Check user VA permissions before copyin/copyout |
 | `sys_read` / `sys_write` / `sys_getdents` | `kernel/api/syscall.c` | User/kernel copies around the VFS calls |
-
-## Other copies on this machine
-
-- **This repo** is the working tree that was pushed.
-- `/home/joseph/weenix-pristine` is a later snapshot, not the original starter.
-- `C:\Users\joseph\Desktop\CSCI402\Shared-ubuntu\weenix-pristine` is the Oct 2025 starter used for the diffs above.
-- iCloud `weenix-cs402` is the same git commit plus uncommitted exam study notes; those notes were not added here.
